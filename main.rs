@@ -5,19 +5,21 @@
 //
 // To run the code:
 //     $ cargo run
+use sorted::sorted;
 
-use derive_builder::Builder;
+use std::env::VarError;
+use std::error::Error as StdError;
+use std::fmt;
+use std::io;
+use std::str::Utf8Error;
 
-#[derive(Builder)]
-pub struct Command {
-    executable: String,
-    args: Vec<String>,
-    env: Vec<String>,
-    current_dir: String,
+#[sorted]
+pub enum Error {
+    Fmt(fmt::Error),
+    Io(io::Error),
+    Utf8(Utf8Error),
+    Var(VarError),
+    Dyn(Box<dyn StdError>),
 }
 
-fn main() {
-    let _ = Command::builder();
-
-    // println!("builder: {:#?}", builder)
-}
+fn main() {}
